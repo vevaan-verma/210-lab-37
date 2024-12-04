@@ -69,6 +69,7 @@ int main() {
 
 			}
 
+			cout << endl; // output blank line for formatting purposes
 			break;
 
 		case 2: // add key
@@ -93,7 +94,7 @@ int main() {
 			if (hashTable[hashIndex].empty()) { // if key is not found
 
 				cout << "Key not found." << endl; // output message
-				//cout << endl; // output blank line for formatting purposes
+				cout << endl; // output blank line for formatting purposes
 				break;
 
 			}
@@ -121,10 +122,38 @@ int main() {
 			cout << "Key found." << endl << endl; // output success message
 			break;
 
+		case 5: // modify key
+
+			cout << "Enter the key to modify: "; // prompt user to enter key
+			cin >> key; // read key from user
+
+			hashIndex = gen_hash_index(key); // generate hash index for key
+
+			// this can be used to give user feedback if the key is not found
+			if (hashTable[hashIndex].empty()) { // if key is not found
+
+				cout << "Key not found." << endl; // output message
+				cout << endl; // output blank line for formatting purposes
+				break;
+
+			}
+
+			cout << "Enter the new key: "; // prompt user to enter new key
+			string newKey; // create string to store new key
+			cin >> newKey; // read new key from user
+
+			hashTable[hashIndex].remove(key); // remove old key from hash table
+
+			hashIndex = gen_hash_index(newKey); // generate hash index for new key
+			hashTable[hashIndex].push_front(newKey); // add new key to hash table
+
+			cout << "Key modified." << endl << endl; // output success message
+			break;
+
 		}
 
 		choice = getMenuChoice(); // get new choice from user
-		//cout << endl; // output blank line for formatting purposes
+		cout << endl; // output blank line for formatting purposes
 
 	}
 
