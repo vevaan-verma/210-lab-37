@@ -1,4 +1,4 @@
-// COMSC-210 | Lab 37 | Vevaan Verma
+// COMSC-210 | Lab 37, 38 | Vevaan Verma
 using namespace std;
 #include <iostream>
 #include <string>
@@ -7,7 +7,9 @@ using namespace std;
 #include <list>
 
 /* FUNCTION PROTOTYPES */
+int getMenuChoice();
 int gen_hash_index(string s);
+int getValidatedChoice(int min, int max);
 
 /* CONSTANTS */
 const string FILE_NAME = "lab-37-data.txt"; // file name
@@ -62,6 +64,24 @@ int main() {
 
 }
 
+// getMenuChoice() displays the menu and gets the user's choice
+// arguments: none
+// returns: int - the user's choice
+int getMenuChoice() {
+
+	cout << "Menu:" << endl;
+	cout << "1. Print first 100 entries" << endl;
+	cout << "2. Search for key" << endl;
+	cout << "3. Add key" << endl;
+	cout << "4. Remove key" << endl;
+	cout << "5. Modify key" << endl;
+	cout << "6. Exit" << endl;
+
+	cout << "Enter your choice: ";
+	return getValidatedChoice(1, 6);
+
+}
+
 // gen_hash_index() generates a hash index for a given string
 // arguments: string s - the string to generate a hash index for
 // returns: int - the hash index of the string
@@ -73,5 +93,24 @@ int gen_hash_index(string s) {
 		asciiSum += s[i]; // add ASCII value of character to asciiSum
 
 	return asciiSum % 200371; // apply hash function to asciiSum (200,371 is a prime number which is larger than double the input size to optimize speed)
+
+}
+
+// getValidatedChoice() gets a validated integer choice from the user (between min and max inclusive)
+// arguments: int min - the minimum value, int max - the maximum value
+// returns: int - the validated integer choice
+int getValidatedChoice(int min, int max) {
+
+	int inputInt; // variable to store the input (of type int)
+
+	while (!(cin >> inputInt) || inputInt < min || inputInt > max) { // while the input is not an integer or is not between the min and max
+
+		cin.clear(); // clear the input stream
+		cin.ignore(INT_MAX, '\n'); // ignore the invalid input
+		cout << "Invalid input. Please enter a valid integer: "; // prompt the user to enter an integer
+
+	}
+
+	return inputInt;
 
 }
