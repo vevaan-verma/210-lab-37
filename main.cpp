@@ -43,19 +43,45 @@ int main() {
 
 	}
 
-	// output first 100 elements of hash table
-	auto itEnd = hashTable.begin();
-	advance(itEnd, 100); // advance iterator 100 elements
+	int choice = getMenuChoice();
 
-	for (auto it = hashTable.begin(); it != itEnd; it++) {
+	while (choice != 6) { // while choice is not to exit
 
-		cout << it->first << ": ";
+		string key; // create string to store key
+		auto itEnd = hashTable.begin(); // create iterator to store end of hash table here due to the switch statement
 
-		// output all elements in bucket
-		for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++)
-			cout << *it2 << " ";
+		switch (choice) { // switch on choice
 
-		cout << endl << endl << endl << endl; // output multiple blank lines for formatting purposes
+		case 1: // print first 100 entries
+
+			advance(itEnd, 100); // advance iterator 100 elements
+
+			for (auto it = hashTable.begin(); it != itEnd; it++) {
+
+				cout << it->first << ": ";
+
+				// output all elements in bucket
+				for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++)
+					cout << *it2 << " ";
+
+				cout << endl << endl << endl << endl; // output multiple blank lines for formatting purposes
+
+			}
+
+			break;
+
+		case 2: // add key
+
+			cout << "Enter the key to add: "; // prompt user to enter key
+			cin >> key; // read key from user
+
+			hashIndex = gen_hash_index(key); // generate hash index for key
+			hashTable[hashIndex].push_front(key); // add key to hash table
+			break;
+		}
+
+		choice = getMenuChoice(); // get new choice from user
+		cout << endl; // output blank line for formatting purposes
 
 	}
 
@@ -71,9 +97,9 @@ int getMenuChoice() {
 
 	cout << "Menu:" << endl;
 	cout << "1. Print first 100 entries" << endl;
-	cout << "2. Search for key" << endl;
-	cout << "3. Add key" << endl;
-	cout << "4. Remove key" << endl;
+	cout << "2. Add key" << endl;
+	cout << "3. Remove key" << endl;
+	cout << "4. Search for key" << endl;
 	cout << "5. Modify key" << endl;
 	cout << "6. Exit" << endl;
 
