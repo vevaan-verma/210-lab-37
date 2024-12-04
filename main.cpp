@@ -2,16 +2,44 @@
 using namespace std;
 #include <iostream>
 #include <string>
+#include <fstream>
 
 /* FUNCTION PROTOTYPES */
 int sum_ascii(string s);
+
+/* CONSTANTS */
+const string FILE_NAME = "lab-37-data.txt"; // file name
+
+/* GLOBAL VARIABLES */
+ifstream fin;
 
 // main() is the entry point of the program and drives the program
 // arguments: none
 // returns: int - the exit code of the program
 int main() {
 
-	cout << sum_ascii("COMSC-210") << endl;
+	fin.open(FILE_NAME); // open file
+
+	if (!fin) { // if file does not exist
+
+		cout << "Error: File " << FILE_NAME << " not found." << endl; // output error message
+		return 1; // return error code
+
+	}
+
+	int asciiSum = 0;
+
+	while (!fin.eof()) { // while not at end of file
+
+		string input;
+		fin >> input; // read input from file
+		asciiSum += sum_ascii(input); // add sum of ASCII values of input to asciiSum
+
+	}
+
+	cout << asciiSum << endl;
+
+	fin.close(); // close file
 	return 0;
 
 }
