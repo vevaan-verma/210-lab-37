@@ -3,9 +3,11 @@ using namespace std;
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <map>
+#include <list>
 
 /* FUNCTION PROTOTYPES */
-int sum_ascii(string s);
+int gen_hash_index(string s);
 
 /* CONSTANTS */
 const string FILE_NAME = "lab-37-data.txt"; // file name
@@ -27,41 +29,49 @@ int main() {
 
 	}
 
-	int asciiSum = 0;
+	map<int, list<string>> hashTable;
 
 	while (!fin.eof()) { // while not at end of file
 
 		string input;
-		fin >> input; // read input from file
-		asciiSum += sum_ascii(input); // add sum of ASCII values of input to asciiSum
+		fin >> input; // read string from file
+
+		int hashIndex = gen_hash_index(input); // generate hash index for string
+		hashTable[hashIndex].push_front(input); // add string to hash table
 
 	}
 
-	cout << asciiSum << endl;
+	// output first 100 elements of hash table
+	auto itEnd = hashTable.begin();
+	advance(itEnd, 100); // advance iterator 100 elements
+
+	for (auto it = hashTable.begin(); it != itEnd; it++) {
+
+		cout << it->first << ": ";
+
+		// output all elements in bucket
+		for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++)
+			cout << *it2 << " ";
+
+		cout << endl << endl << endl << endl; // output multiple blank lines for formatting purposes
+
+	}
 
 	fin.close(); // close file
 	return 0;
 
 }
 
-// sum_ascii() takes a string and returns the sum of the ASCII values of the characters in the string
-// arguments: string s - the string to sum the ASCII values of
-// returns: int - the sum of the ASCII values of the characters in the string
-int sum_ascii(string s) {
+// gen_hash_index() generates a hash index for a given string
+// arguments: string s - the string to generate a hash index for
+// returns: int - the hash index of the string
+int gen_hash_index(string s) {
 
-	int sum = 0;
+	int asciiSum = 0;
 
 	for (int i = 0; i < s.length(); i++)
-		sum += (int) s[i];
+		asciiSum += s[i]; // add ASCII value of character to asciiSum
 
-	return sum;
+	return asciiSum % 200371; // apply hash function to asciiSum (200,371 is a prime number which is larger than double the input size to optimize speed)
 
 }
-
-/*
-These targets are present in the dataset and can be used for testing:
-536B9DFC93AF
-1DA9D64D02A0
-666D109AA22E
-E1D2665B21EA
-*/
