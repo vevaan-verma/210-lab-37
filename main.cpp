@@ -49,6 +49,7 @@ int main() {
 
 		string key; // create string to store key
 		auto itEnd = hashTable.begin(); // create iterator to store end of hash table here due to the switch statement
+		int hashIndex; // create variable to store hash index here due to the switch statement
 
 		switch (choice) { // switch on choice
 
@@ -64,7 +65,7 @@ int main() {
 				for (auto it2 = it->second.begin(); it2 != it->second.end(); it2++)
 					cout << *it2 << " ";
 
-				cout << endl << endl << endl << endl; // output multiple blank lines for formatting purposes
+				cout << endl; // output multiple blank lines for formatting purposes
 
 			}
 
@@ -77,11 +78,53 @@ int main() {
 
 			hashIndex = gen_hash_index(key); // generate hash index for key
 			hashTable[hashIndex].push_front(key); // add key to hash table
+
+			cout << "Key added." << endl << endl; // output success message
 			break;
+
+		case 3: // remove key
+
+			cout << "Enter the key to remove: "; // prompt user to enter key
+			cin >> key; // read key from user
+
+			hashIndex = gen_hash_index(key); // generate hash index for key
+
+			// this can be used to give user feedback if the key is not found
+			if (hashTable[hashIndex].empty()) { // if key is not found
+
+				cout << "Key not found." << endl; // output message
+				//cout << endl; // output blank line for formatting purposes
+				break;
+
+			}
+
+			hashTable[hashIndex].remove(key); // remove key from hash table
+			cout << "Key removed." << endl << endl; // output success message
+			break;
+
+		case 4: // search key
+
+			cout << "Enter the key to search: "; // prompt user to enter key
+			cin >> key; // read key from user
+
+			hashIndex = gen_hash_index(key); // generate hash index for key
+
+			// this can be used to give user feedback if the key is not found
+			if (hashTable[hashIndex].empty()) { // if key is not found
+
+				cout << "Key not found." << endl; // output message
+				cout << endl; // output blank line for formatting purposes
+				break;
+
+			}
+
+			cout << "Key found." << endl << endl; // output success message
+			break;
+
 		}
 
 		choice = getMenuChoice(); // get new choice from user
-		cout << endl; // output blank line for formatting purposes
+		//cout << endl; // output blank line for formatting purposes
 
 	}
 
